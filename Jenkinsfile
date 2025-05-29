@@ -90,7 +90,7 @@ sh '''
 cd external
 pwd
 '''
-                    sh "docker build -t ${IMAGE_NAME}:${VERSION} ."
+                    sh "docker build -f external/Dokerfile -t ${IMAGE_NAME}:${VERSION} ."
 		    sh "docker tag ${IMAGE_NAME}:${VERSION} ${IMAGE_NAME}:latest"
                 }
             }
@@ -153,7 +153,7 @@ sh '''
 cd internal
 pwd
 '''
-                    sh "docker build -t ${IMAGE_NAME}:${VERSION} ."
+                    sh "docker build -f internal/Dockerfile -t ${IMAGE_NAME}:${VERSION} ."
                 }
             }
         }
