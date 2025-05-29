@@ -56,12 +56,12 @@ CREDENTIAL_ID = ""
                 checkout scm
             }
         }
-stage('Building and pushing apps)
+stage ('Building and pushing apps')
 {
 parallel {
- stage('Building external app')
+ stage ('Building external app')
 {
-        stage('Install Dependencies') {
+        stage ('Install Dependencies') {
                         agent {
                 docker { 
                     image 'node:14-alpine'
