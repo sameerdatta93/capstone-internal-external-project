@@ -60,7 +60,7 @@ stage ('Building and pushing apps')
 {
 parallel {
  stage ('Building external app')
-{
+{ stages{
         stage ('Install Dependencies') {
                         agent {
                 docker { 
@@ -111,10 +111,11 @@ parallel {
 		sh "docker rmi ${IMAGE_NAME}:latest"
                 //sh "docker rmi $imageName:$BUILD_NUMBER"
             }
-        }
+        } }
 }
 stage ('Building internal app')
 {
+stages {
 stage ('Install Dependencies') {
                         agent {
                 docker { 
@@ -161,6 +162,7 @@ stage ('Install Dependencies') {
                 //sh "docker rmi $imageName:$BUILD_NUMBER"
             }
         }
+}
 }
 }
 }
