@@ -70,8 +70,10 @@ parallel {
                 }
             }
             steps {
-                echo 'Run npm install' 
+                echo 'Run npm install'
+                echo 'pwd' 
 		sh 'cd external'
+                echo 'pwd'
                 sh 'npm ci'
             }
         }
