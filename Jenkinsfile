@@ -87,6 +87,7 @@ sh '''
 			echo "${env.BRANCH_NAME}"
                     echo 'build the image' 
 sh '''
+cd external
 pwd
 '''
                     sh "docker build -t ${IMAGE_NAME}:${VERSION} ."
@@ -148,6 +149,10 @@ sh '''
             steps {
                 script {
                                         echo 'build the image' 
+sh '''
+cd internal
+pwd
+'''
                     sh "docker build -t ${IMAGE_NAME}:${VERSION} ."
                 }
             }
