@@ -1,6 +1,6 @@
 From node:18
 WORKDIR /app
-COPY package*.json ./
+COPY external/package*.json ./
 RUN npm ci
 COPY . .
 CMD ["npm", "start"]
