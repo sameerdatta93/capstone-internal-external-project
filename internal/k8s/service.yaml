@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: internal-app-svc
+  name: internal-app-svc
+spec:
+  ports:
+  - port: 8082
+    protocol: TCP
+    targetPort: 8082
+  selector:
+    app: internal-app
+    ver: v1.0
+  type: ClusterIP

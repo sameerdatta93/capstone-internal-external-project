@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: internal-app
+  name: internal-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: internal-app
+      ver: v1.0
+  template:
+    metadata:
+      labels:
+        app: internal-app
+        ver: v1.0
+    spec:
+      containers:
+      - image: samdatta93/internal-project-cp:0.0.15
+        name: internal-app
+        ports:
+        - containerPort: 8082
+        resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

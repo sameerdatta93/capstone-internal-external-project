@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: external-app
+  name: external-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: external-app
+      ver: v1.0
+  template:
+    metadata:
+      labels:
+        app: external-app
+        ver: v1.0
+    spec:
+      containers:
+      - image: samdatta93/external-project-cp:latest
+        name: external-app
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        env:
+        - name: SERVER
+          value: "http://internal-app-svc:8082" 
