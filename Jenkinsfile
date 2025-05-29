@@ -206,7 +206,7 @@ pipeline {
 						}
 					}
                     steps {
-						withEnv(["NAMESPACE=${LIFECYCLE}"], "VERSION=${VERSION}"){
+						withEnv(["NAMESPACE=${LIFECYCLE}", "VERSION=${VERSION}"]){
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${CREDENTIAL_ID}"]]){
 						echo "${LIFECYCLE}"
 						sh '''
