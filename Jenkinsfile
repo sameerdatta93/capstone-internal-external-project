@@ -134,7 +134,7 @@ stage ('Install Dependencies') {
                 
 sh '''
                 pwd 
-                cd external
+                cd internal
                pwd
                 npm ci
 '''
