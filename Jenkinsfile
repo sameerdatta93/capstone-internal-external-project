@@ -157,7 +157,7 @@ pipeline {
                         echo 'Run npm install'
 						sh '''
 						pwd 
-						cd external
+						cd internal
 						pwd
 						npm ci
 						'''
@@ -168,7 +168,7 @@ pipeline {
 						steps {
 							script {
 								echo 'Build the image' 
-								sh "docker build -f external/Dockerfile -t ${INTERNAL_IMAGE_NAME}:${VERSION} ."
+								sh "docker build -f internal/Dockerfile -t ${INTERNAL_IMAGE_NAME}:${VERSION} ."
 								sh "docker tag ${INTERNAL_IMAGE_NAME}:${VERSION} ${INTERNAL_IMAGE_NAME}:latest"
 							}
 						}
