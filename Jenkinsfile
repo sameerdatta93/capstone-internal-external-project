@@ -119,15 +119,16 @@ pipeline {
 						}
 					}
                     steps {
-						withEnv(["NAMESPACE=${LIFECYCLE}"]){
+						withEnv(["NAMESPACE=${LIFECYCLE}", "VERSION=${VERSION}"]){
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${CREDENTIAL_ID}"]]){
 						echo "${LIFECYCLE}"
 						sh '''
+						sed 's|{VERSION}|${VERSION}|g' external/k8s/deployment.yaml > external/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
 						kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE
 						pwd
-						kubectl apply -f external/k8s/deployment.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
+						kubectl apply -f external/k8s/deployment-updated.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
 						kubectl apply -f external/k8s/service.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
 						kubectl get svc
 						kubectl get svc -n dev
@@ -205,15 +206,16 @@ pipeline {
 						}
 					}
                     steps {
-						withEnv(["NAMESPACE=${LIFECYCLE}"]){
+						withEnv(["NAMESPACE=${LIFECYCLE}"], "VERSION=${VERSION}"){
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${CREDENTIAL_ID}"]]){
 						echo "${LIFECYCLE}"
 						sh '''
+  						sed 's|{VERSION}|${VERSION}|g' internal/k8s/deployment.yaml > internal/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
 						kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE
 						pwd
-						kubectl apply -f internal/k8s/deployment.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
+						kubectl apply -f internal/k8s/deployment-updated.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
 						kubectl apply -f internal/k8s/service.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
 						kubectl get svc
 						kubectl get svc -n dev
