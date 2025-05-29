@@ -21,6 +21,9 @@ spec:
         name: external-app
         ports:
         - containerPort: 8080
+        env:
+        - name: SERVER
+          value: "http://internal-app-svc:8082"
         resources:
           requests:
             memory: "128Mi"
@@ -28,6 +31,3 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
-        env:
-        - name: SERVER
-          value: "http://internal-app-svc:8082" 
