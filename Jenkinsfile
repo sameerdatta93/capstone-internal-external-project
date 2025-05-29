@@ -71,10 +71,12 @@ parallel {
             }
             steps {
                 echo 'Run npm install'
-                echo 'pwd' 
-		sh 'cd external'
-                echo 'pwd'
-                sh 'npm ci'
+sh '''
+                pwd 
+		cd external
+               pwd
+                npm ci
+'''
             }
         }
 
@@ -129,7 +131,13 @@ stage ('Install Dependencies') {
             }
             steps {
                                 echo 'Run npm install' 
-                sh 'npm ci'
+                
+sh '''
+                pwd 
+                cd external
+               pwd
+                npm ci
+'''
             }
         }
 
