@@ -86,6 +86,9 @@ sh '''
 			echo "${env.GIT_BRANCH}"
 			echo "${env.BRANCH_NAME}"
                     echo 'build the image' 
+sh '''
+pwd
+'''
                     sh "docker build -t ${IMAGE_NAME}:${VERSION} ."
 		    sh "docker tag ${IMAGE_NAME}:${VERSION} ${IMAGE_NAME}:latest"
                 }
