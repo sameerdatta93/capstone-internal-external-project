@@ -2,19 +2,17 @@ pipeline {
     agent any 
     environment {
         EXTERNAL_IMAGE_NAME = 'samdatta93/external-project-cp'
-		INTERNAL_IMAGE_NAME = 'samdatta93/internal-project-cp'
-        DOCKERHUB_CREDS = 'dockerhub-creds'
+	INTERNAL_IMAGE_NAME = 'samdatta93/internal-project-cp'
+        DOCKERHUB_CREDS = 'sd-dockerhub-creds'
         VERSION = "1.0.${env.BUILD_NUMBER}"
         AWS_REGION = 'us-east-1'
-        CLUSTER_NAME = 'sd-cluster'
-		HOME = '/tmp'
-		KUBECONFIG = '/tmp/.kube/config'
-		LIFECYCLE = ""
-		CREDENTIAL_ID = ""
+        //CLUSTER_NAME = 'sd-cluster'
+	KUBECONFIG = '/tmp/.kube/config'
+	LIFECYCLE = ""
+	CREDENTIAL_ID = ""
     }
 
     stages {
-
         stage('Determine Environment')
         {
         parallel{
@@ -27,7 +25,7 @@ pipeline {
                         steps {
 							script {
 									LIFECYCLE = "dev"
-									CREDENTIAL_ID = "aws-creds-dev"
+									CREDENTIAL_ID = "sd-aws-creds-dev"
 							}
                         }
                 }
@@ -40,7 +38,7 @@ pipeline {
                         steps {
 							script {
 									LIFECYCLE = "prod"
-									CREDENTIAL_ID = "aws-creds"
+									CREDENTIAL_ID = "sd-aws-creds"
 							}
                         }
                 }
@@ -123,6 +121,8 @@ pipeline {
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${CREDENTIAL_ID}"]]){
 						echo "${LIFECYCLE}"
 						sh '''
+						CLUSTER_NAME = $(aws eks list-clusters --query "clusters[0]" --output text)
+						echo "Using Cluster: $CLUSTER_NAME"
 						sed 's|{VERSION}|${VERSION}|g' external/k8s/deployment.yaml > external/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
@@ -130,9 +130,6 @@ pipeline {
 						pwd
 						kubectl apply -f external/k8s/deployment-updated.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
 						kubectl apply -f external/k8s/service.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
-						kubectl get svc
-						kubectl get svc -n dev
-						kubectl get svc -n prod
 						'''
 						echo 'Deployed to EKS' 
 						}
@@ -210,6 +207,8 @@ pipeline {
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${CREDENTIAL_ID}"]]){
 						echo "${LIFECYCLE}"
 						sh '''
+						CLUSTER_NAME = $(aws eks list-clusters --query "clusters[0]" --output text)
+                                                echo "Using Cluster: $CLUSTER_NAME"
   						sed 's|{VERSION}|${VERSION}|g' internal/k8s/deployment.yaml > internal/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
@@ -217,9 +216,6 @@ pipeline {
 						pwd
 						kubectl apply -f internal/k8s/deployment-updated.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
 						kubectl apply -f internal/k8s/service.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
-						kubectl get svc
-						kubectl get svc -n dev
-						kubectl get svc -n prod
 						'''
 						echo 'Deployed to EKS' 
 						}
