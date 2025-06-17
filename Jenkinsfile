@@ -26,6 +26,7 @@ pipeline {
 							script {
 									LIFECYCLE = "dev"
 									CREDENTIAL_ID = "sd-aws-creds-dev"
+									VERSION = "3.0.${env.BUILD_NUMBER}"
 							}
                         }
                 }
@@ -39,6 +40,7 @@ pipeline {
 							script {
 									LIFECYCLE = "prod"
 									CREDENTIAL_ID = "sd-aws-creds-prod"
+									VERSION = "4.0.${env.BUILD_NUMBER}"
 							}
                         }
                 }
