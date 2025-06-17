@@ -6,7 +6,7 @@ pipeline {
         DOCKERHUB_CREDS = 'sd-dockerhub-creds'
         VERSION = "1.0.${env.BUILD_NUMBER}"
         AWS_REGION = 'us-east-1'
-        //CLUSTER_NAME = 'sd-cluster'
+        CLUSTER_NAME = ''
 	KUBECONFIG = '/tmp/.kube/config'
 	LIFECYCLE = ""
 	CREDENTIAL_ID = ""
