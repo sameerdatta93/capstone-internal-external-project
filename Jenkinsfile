@@ -121,7 +121,7 @@ pipeline {
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${CREDENTIAL_ID}"]]){
 						echo "${LIFECYCLE}"
 						sh '''
-						CLUSTER_NAME = $(aws eks list-clusters --query "clusters[0]" --output text)
+						CLUSTER_NAME=$(aws eks list-clusters --query "clusters[0]" --output text)
 						echo "Using Cluster: $CLUSTER_NAME"
 						sed 's|{VERSION}|${VERSION}|g' external/k8s/deployment.yaml > external/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
@@ -207,7 +207,7 @@ pipeline {
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${CREDENTIAL_ID}"]]){
 						echo "${LIFECYCLE}"
 						sh '''
-						CLUSTER_NAME = $(aws eks list-clusters --query "clusters[0]" --output text)
+						CLUSTER_NAME=$(aws eks list-clusters --query "clusters[0]" --output text)
                                                 echo "Using Cluster: $CLUSTER_NAME"
   						sed 's|{VERSION}|${VERSION}|g' internal/k8s/deployment.yaml > internal/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
