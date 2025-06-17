@@ -4,7 +4,7 @@ pipeline {
         EXTERNAL_IMAGE_NAME = 'samdatta93/external-project-cp'
 	INTERNAL_IMAGE_NAME = 'samdatta93/internal-project-cp'
         DOCKERHUB_CREDS = 'sd-dockerhub-creds'
-        VERSION = "1.0.${env.BUILD_NUMBER}"
+        VERSION = "2.0.${env.BUILD_NUMBER}"
         AWS_REGION = 'us-east-1'
         CLUSTER_NAME = ''
 	KUBECONFIG = '/tmp/.kube/config'
@@ -123,8 +123,7 @@ pipeline {
 						sh '''
 						CLUSTER_NAME=$(aws eks list-clusters --query "clusters[0]" --output text)
 						echo "Using Cluster: $CLUSTER_NAME"
-      						echo "Using Version: ${VERSION}"	
-	    					echo "Using Version: $VERSION"
+      						echo "Using Version: ${VERSION}"
 						sed "s|{VERSION}|${VERSION}|g" external/k8s/deployment.yaml > external/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
@@ -211,7 +210,7 @@ pipeline {
 						sh '''
 						CLUSTER_NAME=$(aws eks list-clusters --query "clusters[0]" --output text)
                                                 echo "Using Cluster: $CLUSTER_NAME"
-  						sed 's|{VERSION}|${VERSION}|g' internal/k8s/deployment.yaml > internal/k8s/deployment-updated.yaml
+  						sed "s|{VERSION}|${VERSION}|g" internal/k8s/deployment.yaml > internal/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
 						kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE
