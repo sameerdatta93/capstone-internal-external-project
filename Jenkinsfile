@@ -125,7 +125,7 @@ pipeline {
 						echo "Using Cluster: $CLUSTER_NAME"
       						echo "Using Version: ${VERSION}"	
 	    					echo "Using Version: $VERSION"
-						sed 's|{VERSION}|${VERSION}|g' external/k8s/deployment.yaml > external/k8s/deployment-updated.yaml
+						sed "s|{VERSION}|${VERSION}|g" external/k8s/deployment.yaml > external/k8s/deployment-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
 						kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE
