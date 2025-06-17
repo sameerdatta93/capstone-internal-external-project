@@ -6,7 +6,7 @@ Description:
 Sample internal and external app is used in the project where external app is exposed via Load balancer and internal app via clusterIP.
 Both projects are maintained in the same Git repo for simplicity along with their Docker files. There are two branches of the repo named 'main' and 'dev'.
 Initially Jenkins pipeline will determine the environment if it is Dev or Prod and will be setting the required variables like namespace, creds(maintained 2 different creds here for dev and prod), etc.
-Once environment is determined, it will take a git checkout and will start building external and internal apps in parallel.
+Once environment is determined, it will take a git checkout and will start building external and internal apps in parallel. It can be viewed properly in blue ocean page(If it is installed).
 The Jenkins pipeline has steps to build and push the image to Docker and then deploy the same to EKS for both internal and external separately. 
 We have used npm package manager here, and before building we are doing npm install and once it is build, we are pushing it to DockerHub.
 The deployment.yaml will be feching this image and will deploy it to EKS using rolling updates.
@@ -23,7 +23,7 @@ Pre-requisite:
 	- Blue Ocean (optional: just for better viewing)
 	
 Steps:
-We will be continuing considering prod as the branch/pipeline. 
+We will be continuing here considering prod as the branch/pipeline. 
 1. Open Global credentials in Jenkins and add below configs:
 	i. Create Username and Password entry - credentials shared separately over chat - use id as 'sd-dockerhub-creds' which adding credential. (This is for Docker)
 	ii. Create AWS credentials using id as 'sd-aws-creds-prod'. (If needed for dev we could create 'sd-aws-creds-dev')
