@@ -23,13 +23,14 @@ Pre-requisite:
 	- Blue Ocean (optional: just for better viewing)
 	
 Steps:
+We will be continuing considering prod as the branch/pipeline. 
 1. Open Global credentials in Jenkins and add below configs:
 	i. Create Username and Password entry - credentials shared separately over chat - use id as 'sd-dockerhub-creds' which adding credential. (This is for Docker)
-	ii. Create two AWS credentials - use id as 'sd-aws-creds-dev' and 'sd-aws-creds-prod' respectively.
-2 On jenkins homepage, click on new item and create a pipeline for prod and dev. (You can create only one and can continue with respective configurations further)
-3. Once pipeline is created, go to configure and select 'Pipeline Script from SCM' under Pipeline section and then select Git under SCM, and use below git url and use the branch respectively. ('main' for prod pipeline and 'dev' for dev pipeline in Branch Specifier).
+	ii. Create AWS credentials using id as 'sd-aws-creds-prod'. (If needed for dev we could create 'sd-aws-creds-dev')
+2 On jenkins homepage, click on new item and create a pipeline for prod.
+3. Once pipeline is created, go to configure and select 'Pipeline Script from SCM' under Pipeline section and then select Git under SCM, and use below git url and use the branch respectively. ('main' for prod pipeline in Branch Specifier - can specify whatever branch name we need to configure).
 	https://github.com/sameerdatta93/capstone-internal-external-project.git
 	Also select credentials which you would have created in first step. 
-4. Main branch is treated as Prod and dev branch will be treated as dev.
+4. Main branch is treated as Prod.
 5. Run the pipeline. It should push the image to docker and deploy to eks. Rolling deployment is used while deploying a new image to eks. 6. Deployment/service will be created in respective namespaces depending on the branch. 
 7. Get the Load Balancer dns either from console or using kubectl command, and open it in browser using http and port 80. The app should be running.
