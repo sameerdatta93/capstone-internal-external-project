@@ -38,7 +38,7 @@ pipeline {
                         steps {
 							script {
 									LIFECYCLE = "prod"
-									CREDENTIAL_ID = "sd-aws-creds"
+									CREDENTIAL_ID = "sd-aws-creds-prod"
 							}
                         }
                 }
