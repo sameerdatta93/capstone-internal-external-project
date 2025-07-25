@@ -3,20 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Team ROI's  Website</title>
+  <title>Ecommerce Website</title>
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <style>
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(to right, #74ebd5, #ACB6E5);
+          color: #333;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+      .container {
+        background: white;
+        paddin: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        text-align: center;
+        max-width: 400px;
+      }
+      h2 {
+        margin-botton: 1rem;
+        color: #2c3e50;
+      }
+      input[type="text"] {
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        widht: 80%;
+        margin-bottom: 1rem;
+      }
+    input[type="submit"] {
+      background-color: #28a745;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    
+  </style>
 </head>
 <body>
   <div>
-      <h1>Welcome to ROI application</h1>
+      <h1>Welcome to ECommerce website to host your products</h1>
     {{{body}}}
 </div>
 <div>
-  <h2>Add an event</h2>
+  <h2>Add a Product</h2>
     <form action="/event" method="post">
-       title: <input name="title" type="text" /> <br />
-       description: <input name="description" type="text" /> <br />
+       Name: <input name="title" type="text" /> <br />
+       Description: <input name="description" type="text" /> <br />
        <br />
         <input type="submit" name="submit" value="submit" />
     </form>
