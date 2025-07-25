@@ -10,6 +10,6 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: external-app-green
+    app: external-app
     ver: v1.0
   type: LoadBalancer
