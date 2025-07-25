@@ -126,13 +126,15 @@ pipeline {
 						CLUSTER_NAME=$(aws eks list-clusters --query "clusters[0]" --output text)
 						echo "Using Cluster: $CLUSTER_NAME"
       						echo "Using Version: ${VERSION}"
-						sed "s|{VERSION}|${VERSION}|g" external/k8s/deployment.yaml > external/k8s/deployment-updated.yaml
+						sed "s|{VERSION}|${VERSION}|g" external/k8s/deployment-green.yaml > external/k8s/deployment-green-updated.yaml
 						mkdir -p $(dirname $KUBECONFIG)
 						aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME --kubeconfig $KUBECONFIG
 						kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE
 						pwd
-						kubectl apply -f external/k8s/deployment-updated.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
-						kubectl apply -f external/k8s/service.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
+						kubectl apply -f external/k8s/deployment-green-updated.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
+						kubectl apply -f external/k8s/service-green.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
+kubectl apply -f external/k8s/deployment.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
+kubectl apply -f external/k8s/service.yaml --kubeconfig=$KUBECONFIG -n $NAMESPACE
 						'''
 						echo 'Deployed to EKS' 
 						}
