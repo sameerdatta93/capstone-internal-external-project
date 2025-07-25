@@ -6,7 +6,7 @@ metadata:
   name: external-app-svc-green
 spec:
   ports:
-  - port: 80
+  - port: 8085
     protocol: TCP
     targetPort: 8080
   selector:
