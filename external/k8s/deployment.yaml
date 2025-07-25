@@ -22,7 +22,7 @@ spec:
         ver: v1.0
     spec:
       containers:
-      - image: samdatta93/external-project-cp:{VERSION}
+      - image: samdatta93/external-project-cp:4.0.37
         name: external-app
         ports:
         - containerPort: 8080
