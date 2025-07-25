@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: external-app-svc
+  name: external-app-svc-green
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: external-app-green
+    ver: v1.0
+  type: LoadBalancer
