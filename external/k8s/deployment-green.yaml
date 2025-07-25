@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: external-app
+    app: external-app-green
   name: external-app-green
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: external-app
+      app: external-app-green
       ver: v1.0
   strategy:
     type: RollingUpdate
@@ -18,12 +18,12 @@ spec:
   template:
     metadata:
       labels:
-        app: external-app
+        app: external-app-green
         ver: v1.0
     spec:
       containers:
       - image: samdatta93/external-project-cp:{VERSION}
-        name: external-app
+        name: external-app-green
         ports:
         - containerPort: 8080
         env:
