@@ -3,7 +3,7 @@ pipeline {
     environment {
         EXTERNAL_IMAGE_NAME = 'samdatta93/external-project-cp'
 	INTERNAL_IMAGE_NAME = 'samdatta93/internal-project-cp'
-        DOCKERHUB_CREDS = 'sd-dockerhub-creds'
+        DOCKERHUB_CREDS = 'dockerhub-creds'
         VERSION = "2.0.${env.BUILD_NUMBER}"
         AWS_REGION = 'us-east-1'
         CLUSTER_NAME = ''
